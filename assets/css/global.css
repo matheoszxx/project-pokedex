@@ -4,26 +4,72 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: #f6f8fc;
+}
+
 .content {
     padding: 1rem;
+    
 }
+
+/* media query permite criar desings responsivos que se adaptam em telas diferentes */
+/* dentro do argumento se ler assim: quando a tela chegar no minimo de largura proprosto que é 992px... */
+@media screen and (min-width: 992px) {
+    /* meu content vai ter o maximo de largura de 992px e vai ficar centralizado na tela */
+    .content{
+        max-width: 992px;
+        margin: 0 auto;
+        border-radius: 1rem;
+    }
+  }
 
 .pokemons {
     /* Transforma a lista em forma de coluna */
     display: grid;
     /* Fraciona a lista para ficar uma do lado da outra */
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     /* Tira os numeros que ordena a lista */
     list-style: none;
     padding: 0;
     margin: 0;
+    background-color: white;
+    border-radius: 1rem;
 }
+
+@media screen and (min-width: 380px) {
+    /* o grid na tela vai ter 4 colunas uma do lado da outra */
+    .pokemons{
+        grid-template-columns: 1fr 1fr;
+        border-radius: 1rem;
+        
+    }
+  }
+
+@media screen and (min-width: 576px) {
+    /* o grid na tela vai ter 4 colunas uma do lado da outra */
+    .pokemons{
+        grid-template-columns: 1fr 1fr 1fr;
+        border-radius: 1rem;
+        
+    }
+  }
+
+/* quando a tela aumentar... */
+@media screen and (min-width: 992px) {
+    /* o grid na tela vai ter 4 colunas uma do lado da outra */
+    .pokemons{
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        border-radius: 1rem;
+        
+    }
+  }
 
 .pokemon {
     display: flex;
     flex-direction: column;
     margin: .5rem;
-    padding: 1rem 1rem;
+    padding: 1rem   ;
     background-color: #49D0B0;
     border-radius: 1rem;    
 }
@@ -32,7 +78,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .pokemon .details .types {
@@ -61,7 +107,7 @@
 .pokemon .number {
     text-align: right;
     color: black;
-    opacity: 0.2;
+    opacity: .2;
     font-size: small;
 }
 
