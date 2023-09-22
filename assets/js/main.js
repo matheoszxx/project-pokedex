@@ -1,8 +1,8 @@
 
-//Querry String Paramets
 const offset = 0
 const limit = 10
 const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+
 
 //fetch() fornece uma maneira fácil e lógica de buscar recursos de forma assíncrona na rede.
 fetch(url)
