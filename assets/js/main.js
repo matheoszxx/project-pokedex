@@ -1,9 +1,4 @@
 
-const offset = 0
-const limit = 10
-const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
-
-
 function convertPokemonToHtml(pokemon) {
     return `
         <li class="pokemon">
@@ -30,24 +25,18 @@ function convertPokemonToHtml(pokemon) {
 //Pega a lista de pokemons HTML 
 const pokemonListHtml = document.getElementById('pokemonListHtml')
 
+//Transformando a lista em HTML
+pokeApi.getAllPokemon().then((pokemonList) => {
 
-//fetch() fornece uma maneira fácil e lógica de buscar recursos de forma assíncrona na rede.
-fetch(url)
+    const listItems = []
 
-    //Transformando o response em uma Promise do body convertido em json()
-    .then((response) => response.json())
+    for (let i = 0; i < pokemonList.length; i++) {
+        const pokemon = pokemonList[i];
+        //Gerou um conjunto de LI (listas no html) 
+        listItems.push(convertPokemonToHtml(pokemon))
 
-    //Recebe o body convertido e pega a lista que é o "results"
-    .then((bodyConvertidoEmJson) => bodyConvertidoEmJson.results)
+        // troquei esse metodo "pokemonListHtml.innerHTML" pois ele concatenava item por item
+    }
 
-    //Pega a lista de pokemon e printa na tela
-    .then((pokemonList) => {
-        
-        for (let i = 0; i < pokemonList.length; i++) {
-            const pokemon = pokemonList[i];
-            //Gerou um conjunto de LI (listas no html) 
-            pokemonListHtml.innerHTML += convertPokemonToHtml(pokemon)
-        }
-    })
-
-    .then((error) => console.error(error))
+    console.log(listItems);
+})
