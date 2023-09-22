@@ -27,6 +27,10 @@ function convertPokemonToHtml(pokemon) {
    `
 }
 
+//Pega a lista de pokemons HTML 
+const pokemonListHtml = document.getElementById('pokemonListHtml')
+
+
 //fetch() fornece uma maneira fácil e lógica de buscar recursos de forma assíncrona na rede.
 fetch(url)
 
@@ -41,8 +45,8 @@ fetch(url)
         
         for (let i = 0; i < pokemonList.length; i++) {
             const pokemon = pokemonList[i];
-            console.log(convertPokemonToHtml(pokemon));
-            
+            //Gerou um conjunto de LI (listas no html) 
+            pokemonListHtml.innerHTML += convertPokemonToHtml(pokemon)
         }
     })
 
