@@ -26,17 +26,28 @@ function convertPokemonToHtml(pokemon) {
 const pokemonListHtml = document.getElementById('pokemonListHtml')
 
 //Transformando a lista em HTML
-pokeApi.getAllPokemon().then((pokemonList) => {
+pokeApi.getAllPokemon().then((pokemonList = []) => {
 
-    const listItems = []
+    const newList = pokemonList.map((pokemonList) => {
+        return convertPokemonToHtml(pokemonList)
+    })
 
-    for (let i = 0; i < pokemonList.length; i++) {
-        const pokemon = pokemonList[i];
-        //Gerou um conjunto de LI (listas no html) 
-        listItems.push(convertPokemonToHtml(pokemon))
+    //Criamos uma variavel "newListHtml" e implementamos o join() para tirar a virgula que aparecia entre as listas de pokemon
+    const newListHtml = newList.join('')
+    
+    pokemonListHtml.innerHTML += newListHtml
 
-        // troquei esse metodo "pokemonListHtml.innerHTML" pois ele concatenava item por item
-    }
 
-    console.log(listItems);
+
+    //SUBSTITUIMOS TODA ESSA LINHA DE CODIGO PARA MANIPULAR LISTA PELA FUNÇÃO .map
+
+    // const listItems = []
+    // for (let i = 0; i < pokemonList.length; i++) {
+    //     const pokemon = pokemonList[i];
+    //     //Gerou um conjunto de LI (listas no html) 
+    //     listItems.push(convertPokemonToHtml(pokemon))
+
+    //     // troquei esse metodo "pokemonListHtml.innerHTML" pois ele concatenava item por item
+    // }  
+    // console.log(listItems);
 })
