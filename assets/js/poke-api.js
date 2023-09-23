@@ -5,7 +5,7 @@ const pokeApi = {}
 function convertPokeApiDetailToPokemon(pokeDetail) {
     //instancia do objeto pokemon
     const pokemon = new Pokemon()
-    pokemon.pokeNumber = pokeDetail.order
+    pokemon.pokeNumber = pokeDetail.id
     pokemon.name = pokeDetail.name
 
     const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name)
@@ -27,21 +27,21 @@ pokeApi.getPokemonDetails = (pokemon) => {
         .then(convertPokeApiDetailToPokemon)
 }
 
-//Com esse método lidamos com a API e o consumo do HTTP
-pokeApi.getAllPokemon = (offset = 0, limit = 5) => {
+//"pokeApi.getAllPokemon" constrói a URL correta para a chamada à API com base no "offset" e "limit"
+pokeApi.getAllPokemon = (offset = 0, limit = 150) => {
     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
 
-    //fetch() fornece uma maneira fácil e lógica de buscar recursos de forma assíncrona na rede.
+    // Usa fetch para fazer a chamada à API
     return fetch(url)
 
-        //Transformando o response em uma Promise do body convertido em json()
+        // converte a resposta em JSON.
         .then((response) => response.json())
 
-        //Recebe o body convertido e pega a lista de pokemon que é o "results"
+        //pega a lista de Pokémon (chamada de "results") da resposta JSON.
         .then((bodyConvertidoEmJson) => bodyConvertidoEmJson.results)
-        //Recebe a lista dos results e mapea para pegar a lista dos detalhes dos pokemon
+        //Em seguida, mapeia a lista de Pokémon para chamar a função pokeApi.getPokemonDetails para cada um deles, criando uma lista de promessas.
         .then((pokemonListResults) => pokemonListResults.map(pokeApi.getPokemonDetails))
-        //Recebe a lista de requisição => e aplica a função promise (que toda a requisição finalize)
+        //Usa Promise.all para esperar que todas essas promessas sejam resolvidas, resultando em uma lista de detalhes de Pokémon.
         .then((detailsListRequest) => Promise.all(detailsListRequest))
         //Finalmente pega a lista de detalhes dos pokemon
         .then((pokemonListDetails) => pokemonListDetails)

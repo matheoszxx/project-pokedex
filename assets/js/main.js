@@ -1,4 +1,12 @@
+//Pega a lista de pokemons HTML 
+const pokemonListHtml = document.getElementById('pokemonListHtml')
 
+//Pega o botão de "Load More" no HTML
+const loadMoreButton = document.getElementById('loadMoreButton')
+
+const limit = 10; // Mostrar 10 Pokémon por página
+let currentPage = 1; //página atual
+let offset = -150;
 
 function convertPokemonToHtml(pokemon) {
     return `
@@ -22,31 +30,32 @@ function convertPokemonToHtml(pokemon) {
    `
 }
 
-//Pega a lista de pokemons HTML 
-const pokemonListHtml = document.getElementById('pokemonListHtml')
-
-//Transformando a lista em HTML
-pokeApi.getAllPokemon().then((pokemonList = []) => {
-
-    const newList = pokemonList.map((pokemonList) => {
-        return convertPokemonToHtml(pokemonList)
-    })
-
-    //Criamos uma variavel "newListHtml" e implementamos o join() para tirar a virgula que aparecia entre as listas de pokemon
-    const newListHtml = newList.join('')
+function loadPokemonPage(page) {
+    const offset = (page - 1) * limit;
     
-    pokemonListHtml.innerHTML += newListHtml
+    // Chamada à API para carregar a página atual
+    pokeApi.getAllPokemon(offset, limit).then((pokemonList = []) => {
+        const newList = pokemonList.map((pokemon) => {
+            return convertPokemonToHtml(pokemon);
+        });
+        // Adicione os novos Pokémon à lista existente
+        pokemonListHtml.innerHTML = newList.join('');
 
+        // Verifica se atingiu o Pokémon de número 150
+        if (offset + limit >= 150) {
+            loadMoreButton.parentElement.removeChild(loadMoreButton) // Desativa o botão "Load More"
+        }
+    });
+}
 
+// Função para carregar a próxima página
+function loadNextPage() {
+    currentPage++;
+    loadPokemonPage(currentPage);
+}
 
-    //SUBSTITUIMOS TODA ESSA LINHA DE CODIGO PARA MANIPULAR LISTA PELA FUNÇÃO .map
+// Inicialmente, carregue a primeira página
+loadPokemonPage(currentPage);
 
-    // const listItems = []
-    // for (let i = 0; i < pokemonList.length; i++) {
-    //     const pokemon = pokemonList[i];
-    //     //Gerou um conjunto de LI (listas no html) 
-    //     listItems.push(convertPokemonToHtml(pokemon))
-
-    // }  
-    // console.log(listItems);
-})
+// Adicione um ouvinte de evento para o botão "Load More"
+loadMoreButton.addEventListener('click', loadNextPage);
