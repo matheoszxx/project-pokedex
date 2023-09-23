@@ -28,7 +28,7 @@ pokeApi.getPokemonDetails = (pokemon) => {
 }
 
 //"pokeApi.getAllPokemon" constrói a URL correta para a chamada à API com base no "offset" e "limit"
-pokeApi.getAllPokemon = (offset = 0, limit = 150) => {
+pokeApi.getAllPokemon = async (offset = 0, limit = 150) => {
     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
 
     // Usa fetch para fazer a chamada à API

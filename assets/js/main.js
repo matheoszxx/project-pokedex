@@ -6,7 +6,7 @@ const loadMoreButton = document.getElementById('loadMoreButton')
 
 const limit = 10; // Mostrar 10 Pokémon por página
 let currentPage = 1; //página atual
-let offset = -150;
+let offset = -140;
 
 function convertPokemonToHtml(pokemon) {
     return `
@@ -39,7 +39,7 @@ function loadPokemonPage(page) {
             return convertPokemonToHtml(pokemon);
         });
         // Adicione os novos Pokémon à lista existente
-        pokemonListHtml.innerHTML = newList.join('');
+        pokemonListHtml.innerHTML += newList.join('');
 
         // Verifica se atingiu o Pokémon de número 150
         if (offset + limit >= 150) {
