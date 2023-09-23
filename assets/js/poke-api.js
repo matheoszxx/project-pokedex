@@ -28,7 +28,7 @@ pokeApi.getPokemonDetails = (pokemon) => {
 }
 
 //Com esse método lidamos com a API e o consumo do HTTP
-pokeApi.getAllPokemon = (offset = 0, limit = 60) => {
+pokeApi.getAllPokemon = (offset = 0, limit = 5) => {
     const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
 
     //fetch() fornece uma maneira fácil e lógica de buscar recursos de forma assíncrona na rede.
